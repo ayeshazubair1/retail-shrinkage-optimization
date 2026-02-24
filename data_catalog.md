@@ -41,7 +41,9 @@ After identifying quality issues, I created a clean schema with transformation s
 **Why views, not physical tables?** Views were chosen over physical tables because the data was not yet analysis-ready and would be further modeled in gold layer. This approach avoided unnecessary data duplication and kept the pipeline flexible for future transformations.
 
 ### 3- Gold Layer / Analytical Modeling
-After storing the cleaned transformed data into views, I created a gold schema and transformed the six raw tables into a star schema optimized for business analysis. This involved complete restructuring: renaming tables and columns to business-friendly names, establishing proper relationships with primary and foreign keys, and consolidating relevant attributes from multiple source tables into each dimension and fact table.  
+After storing the cleaned transformed data into views, I created a gold schema and transformed the six raw tables into a star schema optimized for business analysis. This involved complete restructuring: renaming tables and columns to business-friendly names, establishing proper relationships with primary and foreign keys, and consolidating relevant attributes from multiple source tables into each dimension and fact table.
+
+  
 <img src="docs/02_ERD_bibitor_llc.svg" width="600" alt="ERD Diagram">
 
 ### Table Descriptions
@@ -52,6 +54,7 @@ Rows / Columns: **80 / 3**
 | store_id | Unique identifier for each store location. |
 | store_no | Internal reference number assigned by Bibitor LLC. |
 | city     | City where the store operates. |  
+
 
 Table Name: **Products (Dimension)**  
 Rows / Columns: **12K / 8**  
@@ -66,6 +69,7 @@ Rows / Columns: **12K / 8**
 | price          | Retail selling price of the product for customers. |
 | purchase_price | Cost price paid by Bibitor LLC to vendors. |  
 
+
 Table Name: **Vendors (Dimension)**  
 Rows / Columns: **134 / 3**   
 | Column      | Description |
@@ -74,9 +78,9 @@ Rows / Columns: **134 / 3**
 | vendor_no   | Internal vendor reference number used by Bibitor LLC. |
 | vendor_name | Official name of the vendor or supplier company. |  
 
+
 Table Name: **Inventory_Snapshot (Fact)**  
 Rows / Columns: **431K / 8**  
-
 | Column        | Description |
 |---------------|-------------|
 | snapshot_id   | Unique identifier for each inventory record. |
@@ -87,6 +91,7 @@ Rows / Columns: **431K / 8**
 | snapshot_type | Snapshot type — typically “start” or “end” of day. |
 | on_hand       | Number of product units available in stock. |
 | price         | Product price at the time of the snapshot. |  
+
 
 Table Name: **Purchases (Fact)**  
 Rows / Columns: **2M / 16**  
@@ -109,6 +114,7 @@ Rows / Columns: **2M / 16**
 | approval          | Purchase approval status or note (e.g., approved, pending). |
 | classification    | Category of the purchased product (matches product classification). |  
 
+
 Table Name: **Sales (Fact)**  
 Rows / Columns: **13M / 11**  
 | Column        | Description |
@@ -124,9 +130,8 @@ Rows / Columns: **13M / 11**
 | volume        | Product volume (e.g., 750ml). |
 | classification | Product category code. |
 | excise_tax    | Alcohol excise tax charged per sale. |
-
 ---
-**SQL Scripts:**
+**SQL Scripts:**  
 DDL scripts [here](sql/01_ddl)  
 Data Load scripts [here](sql/02_load)  
 Data Quality Checks [here](sql/03_test)  
