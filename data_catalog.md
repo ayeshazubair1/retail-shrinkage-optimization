@@ -43,6 +43,7 @@ After identifying quality issues, I created a clean schema with transformation s
 ### 3- Gold Layer / Analytical Modeling
 After storing the cleaned transformed data into views, I created a gold schema and transformed the six raw tables into a star schema optimized for business analysis. This involved complete restructuring: renaming tables and columns to business-friendly names, establishing proper relationships with primary and foreign keys, and consolidating relevant attributes from multiple source tables into each dimension and fact table.
 
+<br>
   
 <img src="docs/02_ERD_bibitor_llc.svg" width="600" alt="ERD Diagram">
 
@@ -55,6 +56,7 @@ Rows / Columns: **80 / 3**
 | store_no | Internal reference number assigned by Bibitor LLC. |
 | city     | City where the store operates. |  
 
+<br>
 
 Table Name: **Products (Dimension)**  
 Rows / Columns: **12K / 8**  
@@ -69,6 +71,7 @@ Rows / Columns: **12K / 8**
 | price          | Retail selling price of the product for customers. |
 | purchase_price | Cost price paid by Bibitor LLC to vendors. |  
 
+<br>
 
 Table Name: **Vendors (Dimension)**  
 Rows / Columns: **134 / 3**   
@@ -78,6 +81,7 @@ Rows / Columns: **134 / 3**
 | vendor_no   | Internal vendor reference number used by Bibitor LLC. |
 | vendor_name | Official name of the vendor or supplier company. |  
 
+<br>
 
 Table Name: **Inventory_Snapshot (Fact)**  
 Rows / Columns: **431K / 8**  
@@ -92,6 +96,7 @@ Rows / Columns: **431K / 8**
 | on_hand       | Number of product units available in stock. |
 | price         | Product price at the time of the snapshot. |  
 
+<br>
 
 Table Name: **Purchases (Fact)**  
 Rows / Columns: **2M / 16**  
@@ -114,6 +119,7 @@ Rows / Columns: **2M / 16**
 | approval          | Purchase approval status or note (e.g., approved, pending). |
 | classification    | Category of the purchased product (matches product classification). |  
 
+<br>
 
 Table Name: **Sales (Fact)**  
 Rows / Columns: **13M / 11**  
