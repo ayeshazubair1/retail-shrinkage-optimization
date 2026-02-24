@@ -146,8 +146,8 @@ Clean Layer (Views: deduplication, validation, type casting)
     ↓
 Gold Schema (Star schema with materialized aggregations)
 ```
-**Why This Architecture:** The Gold schema ensures consistent business definitions across all downstream analysis—mimicking the semantic layer approach used by enterprise retail analytics teams.
-Detailed technical documentation [here.](./DATA_CATALOG.md)
+**Why This Architecture:** The Gold schema ensures consistent business definitions across all downstream analysis—mimicking the semantic layer approach used by enterprise retail analytics teams.  
+Detailed technical documentation [here.](data_catalog.md)
 
 ## Future Analysis Opportunities
 **1-** Incorporate monthly sales trends to calculate dynamic safety stock levels, moving away from a fixed 90-day threshold to better manage seasonal demand spikes and holiday volatility.
