@@ -1,0 +1,5 @@
+"store_id","revenue_loss","cost_loss","loss_rate","priority_level"
+77,53136.97,38996.50,1.28,critical
+25,34123.62,25167.99,1.44,critical
+63,22023.45,15990.30,1.43,high impact
+47,20152.72,14439.32,1.67,high impact
