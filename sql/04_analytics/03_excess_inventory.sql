@@ -113,8 +113,6 @@ segmentation AS (
 )
 SELECT *
 FROM segmentation
-WHERE priority_segment <> 'D_Normal'
-	AND priority_segment <> 'B_SlowMoving'
 ;
 -- OUTPUT:
 /*

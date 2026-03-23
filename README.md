@@ -11,7 +11,8 @@ This analysis identifies two major financial risks impacting Bibitor LLC:
 
 Key findings show that 65% of all shrinkage is localized in just four high-risk stores (notably Store 77 and Store 25), which also suffer from the highest levels of excess inventory.  
 Additionally, systemic stock imbalances are being worsened by significant vendor fulfillment inaccuracies, including a 35K unit delivery variance from William Grant & Sons Inc.   
-By focusing audits on high-risk locations and enforcing vendor accountability, Bibitor LLC can release millions in trapped capital and stabilize profit margins.
+By focusing audits on high-risk locations and enforcing vendor accountability, Bibitor LLC can release millions in trapped capital and stabilize profit margins.  
+**View Dashboard** [here.](https://public.tableau.com/app/profile/ayeshazubair/viz/RetailShrinkageInventoryAnalysisBibitorLLC/bibitor_dashboard)
 
 ## 📊 Key Findings & Business Implications
 #### 1. Shrinkage Is Highly Concentrated: Four Stores Drive Nearly Two-Thirds of Total Loss
