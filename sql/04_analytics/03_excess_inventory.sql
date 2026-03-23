@@ -73,6 +73,7 @@ CREATE TEMP TABLE temp_base AS
 	WHERE dos > 90
 ;
 --=====================================================================================
+
 -- Segmentation by store
 WITH store_agg AS (
 	SELECT
@@ -113,6 +114,8 @@ segmentation AS (
 )
 SELECT *
 FROM segmentation
+WHERE priority_segment <> 'D_Normal'
+	AND priority_segment <> 'B_SlowMoving'
 ;
 -- OUTPUT:
 /*
