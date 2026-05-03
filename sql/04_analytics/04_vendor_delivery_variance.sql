@@ -32,7 +32,7 @@ WITH qty_agg AS (
 		store_id,
 		product_id,
 		SUM(total_purchase_qty) AS purchase_qty,
-		SUM(total_sale_qty) AS sale_qty
+		SUM(total_sale_qty)     AS sale_qty
 	FROM (
 		SELECT store_id,product_id, total_purchase_qty, NULL AS total_sale_qty FROM gold.mv_purchases_agg 
 		UNION ALL
@@ -45,7 +45,7 @@ inv_snap AS (
 		store_id,
 		product_id,
 		SUM(CASE WHEN snapshot_type = 'start' THEN on_hand END) AS start_inv,
-		SUM(CASE WHEN snapshot_type = 'end' THEN on_hand END) AS end_inv
+		SUM(CASE WHEN snapshot_type = 'end'   THEN on_hand END) AS end_inv
 	FROM gold.inventory_snapshot 
 	GROUP BY store_id, product_id
 ),
@@ -53,7 +53,7 @@ deviation AS (
 	SELECT
 		qa.store_id,
 		qa.product_id,
-		start_inv - end_inv + sale_qty AS qty_delivered,
+		start_inv - end_inv + sale_qty                  AS qty_delivered,
 		(start_inv - end_inv + sale_qty) - purchase_qty AS variance
 	FROM qty_agg qa
 	JOIN inv_snap inv ON qa.store_id = inv.store_id AND 
@@ -66,8 +66,8 @@ vendor_map AS (
 vendor_lvl AS (
     SELECT
         vm.vendor_id,
-        COUNT(DISTINCT d.product_id) AS total_products,
-        SUM(variance) AS variance,
+        COUNT(DISTINCT d.product_id)                                    AS total_products,
+        SUM(variance)                                                   AS variance,
         ROUND((SUM(variance) / NULLIF(SUM(qty_delivered), 0)) * 100, 2) AS variance_rate
     FROM deviation d
     JOIN vendor_map vm ON d.store_id = vm.store_id 
@@ -81,7 +81,7 @@ ranked AS (
     SELECT
         *,
         DENSE_RANK() OVER (ORDER BY variance_rate DESC) AS over_rank,
-        DENSE_RANK() OVER (ORDER BY variance_rate ASC) AS under_rank
+        DENSE_RANK() OVER (ORDER BY variance_rate ASC)  AS under_rank
     FROM vendor_lvl
 ) 
 SELECT
@@ -91,7 +91,7 @@ SELECT
     r.variance,
     r.variance_rate,
     CASE 
-        WHEN over_rank <= 3 THEN over_rank
+        WHEN over_rank <= 3  THEN over_rank
         WHEN under_rank <= 3 THEN under_rank
     END AS rank_no,
     CASE
@@ -102,6 +102,7 @@ JOIN gold.vendors v ON r.vendor_id = v.vendor_id
 WHERE over_rank <= 3 OR under_rank <= 3
 ORDER BY delivery_profile, rank_no
 ;
+
 -- OUTPUT:
 /*
 vendor_id|vendor_name             |total_products|variance|variance_rate|rank_no|delivery_profile

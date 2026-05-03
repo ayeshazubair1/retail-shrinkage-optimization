@@ -98,7 +98,7 @@ BEGIN
 	    SELECT 
 	        inventory_id, store, brand_id, description, size, end_date AS snapshot_date, 'end' AS snapshot_type, on_hand, price FROM clean.endinvfinal12312016
 	) t
-	LEFT JOIN gold.stores s ON t.store = s.store_no
+	LEFT JOIN gold.stores s   ON t.store = s.store_no
 	LEFT JOIN gold.products p ON t.brand_id = p.brand_no AND t.description = p.description AND t.size = p.size;
 
 	-- 5) gold.purchases
@@ -123,9 +123,9 @@ BEGIN
 	    c.classification
 	FROM clean.purchasesfinal12312016 c
 	LEFT JOIN clean.invoicepurchases12312016 i ON c.vendor_number = i.vendor_number AND c.po_number = i.po_number AND c.invoice_date = i.invoice_date
-	LEFT JOIN gold.stores s ON c.store = s.store_no
+	LEFT JOIN gold.stores s   ON c.store = s.store_no
 	LEFT JOIN gold.products p ON c.brand_id = p.brand_no AND c.description = p.description AND c.size = p.size
-	LEFT JOIN gold.vendors v ON c.vendor_number = v.vendor_no;
+	LEFT JOIN gold.vendors v  ON c.vendor_number = v.vendor_no;
 
 	-- 6) gold.sales
 	TRUNCATE TABLE gold.sales;
@@ -143,9 +143,9 @@ BEGIN
 	    t.classification,
 	    t.excise_tax
 	FROM clean.salesfinal12312016 t
-	LEFT JOIN gold.stores s ON t.store = s.store_no
+	LEFT JOIN gold.stores s   ON t.store = s.store_no
 	LEFT JOIN gold.products p ON t.brand_id = p.brand_no AND t.description = p.description AND t.size = p.size
-	LEFT JOIN gold.vendors v ON t.vendor_number = v.vendor_no;
+	LEFT JOIN gold.vendors v  ON t.vendor_number = v.vendor_no;
 
 END;
 $$;

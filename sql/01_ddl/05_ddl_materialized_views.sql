@@ -12,34 +12,31 @@ Usage:
 
 -- View for gold.purchases table
 DROP MATERIALIZED VIEW IF EXISTS gold.mv_purchases_agg;
-
-CREATE MATERIALIZED VIEW gold.mv_purchases_agg AS 
-SELECT 
+CREATE MATERIALIZED VIEW gold.mv_purchases_agg AS
+SELECT
     product_id,
     store_id,
     vendor_id,
-    SUM(purchase_quantity) AS total_purchase_qty,
-    SUM(purchase_amount) AS total_purchase_amt,
-    SUM(invoice_amount) AS total_invoice_amt,
-    COUNT(*) AS transaction_count,
+    SUM(purchase_quantity)                                              AS total_purchase_qty,
+    SUM(purchase_amount)                                                AS total_purchase_amt,
+    SUM(invoice_amount)                                                 AS total_invoice_amt,
+    COUNT(*)                                                            AS transaction_count,
     ROUND((SUM(purchase_amount) / NULLIF(SUM(purchase_quantity), 0)), 2) AS weighted_purchase_price,
     classification
 FROM gold.purchases
 GROUP BY product_id, store_id, vendor_id, classification;
 
-
 -- View for gold.sales table
 DROP MATERIALIZED VIEW IF EXISTS gold.mv_sales_agg;
-
 CREATE MATERIALIZED VIEW gold.mv_sales_agg AS
-SELECT 
+SELECT
     product_id,
     store_id,
     vendor_id,
-    SUM(sale_quantity) AS total_sale_qty,
-    SUM(sale_amount) AS total_sale_amt,
-    COUNT(*) AS transaction_count,
-    ROUND((SUM(sale_amount) / NULLIF(SUM(sale_quantity), 0)), 2) AS weighted_sale_price,
+    SUM(sale_quantity)                                              AS total_sale_qty,
+    SUM(sale_amount)                                                AS total_sale_amt,
+    COUNT(*)                                                        AS transaction_count,
+    ROUND((SUM(sale_amount) / NULLIF(SUM(sale_quantity), 0)), 2)   AS weighted_sale_price,
     classification
 FROM gold.sales
 GROUP BY product_id, store_id, vendor_id, classification;

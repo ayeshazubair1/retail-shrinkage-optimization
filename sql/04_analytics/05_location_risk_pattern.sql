@@ -39,7 +39,7 @@ inv_snap AS (
 	SELECT
 		store_id,
 		SUM(CASE WHEN snapshot_type = 'start' THEN on_hand END) AS start_inv,
-		SUM(CASE WHEN snapshot_type = 'end' THEN on_hand END) AS end_inv
+		SUM(CASE WHEN snapshot_type = 'end'   THEN on_hand END) AS end_inv
 	FROM gold.inventory_snapshot 
 	GROUP BY store_id
 ),
@@ -47,7 +47,7 @@ qty_agg AS (
 	SELECT 
 		store_id,
 		SUM(total_purchase_qty) AS purchase_qty,
-		SUM(total_sale_qty) AS sale_qty
+		SUM(total_sale_qty)	    AS sale_qty
 	FROM (
 		SELECT store_id, total_purchase_qty, NULL AS total_sale_qty FROM gold.mv_purchases_agg 
 		UNION ALL
@@ -64,7 +64,7 @@ shrinkage_calc AS (
 		((start_inv + purchase_qty - sale_qty) - end_inv) * weighted_purchase_price AS cost_loss
 	FROM base b
 	JOIN inv_snap inv ON b.store_id = inv.store_id 
-	JOIN qty_agg qa ON b.store_id = qa.store_id  
+	JOIN qty_agg qa   ON b.store_id = qa.store_id  
 ),
 ranked AS (
 	SELECT 
@@ -73,7 +73,7 @@ ranked AS (
 		loss_rate,
 		cost_loss,
 		DENSE_RANK() OVER(ORDER BY cost_loss DESC) AS loss_rank,
-		DENSE_RANK() OVER(ORDER BY cost_loss ASC) AS overstock_rank,
+		DENSE_RANK() OVER(ORDER BY cost_loss ASC)  AS overstock_rank,
 		CASE 
 			WHEN cost_loss > 0 THEN 'loss'
 			WHEN cost_loss < 0 THEN 'overstock'
@@ -88,7 +88,7 @@ SELECT
 	cost_loss,
 	loss_rate,
 	CASE 
-		WHEN loss_rank <= 3 THEN loss_rank
+		WHEN loss_rank <= 3 	THEN loss_rank
 		WHEN overstock_rank <=3 THEN overstock_rank
 	END AS risk_rank,
 	risk_type 
@@ -96,6 +96,7 @@ FROM ranked
 WHERE loss_rank <= 3 OR overstock_rank <= 3
 ORDER BY risk_type, risk_rank
 ;
+
 -- OUTPUT:
 /*
 store_id|city      |cost_loss|loss_rate|risk_rank|risk_type

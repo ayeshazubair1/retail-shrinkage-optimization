@@ -40,7 +40,7 @@ inv_agg AS (
 	SELECT 
 		inv.product_id,
 		SUM(CASE WHEN inv.snapshot_type = 'start' THEN inv.on_hand END) AS start_inv,
-		SUM(CASE WHEN inv.snapshot_type = 'end' THEN inv.on_hand END ) AS end_inv
+		SUM(CASE WHEN inv.snapshot_type = 'end'   THEN inv.on_hand END ) AS end_inv
 	FROM gold.inventory_snapshot inv
 	GROUP BY inv.product_id 
 ),
@@ -48,7 +48,7 @@ qty_agg AS (
 	SELECT
 		product_id,
 		SUM(total_purchase_qty) AS purchase_qty,
-		SUM(total_sale_qty) AS sale_qty
+		SUM(total_sale_qty) 	AS sale_qty
 	FROM (
 		SELECT mvp.product_id, mvp.total_purchase_qty, NULL AS total_sale_qty FROM gold.mv_purchases_agg mvp
 		UNION ALL 
@@ -60,11 +60,11 @@ shrinkage_calc AS (
 	SELECT 
 		pp.product_id,
 		CASE 
-			WHEN pp.sale_price >= ps.p75 THEN 'high_value' ELSE 'low_value' END AS product_cat,
-		(ia.start_inv + qa.purchase_qty - qa.sale_qty) - ia.end_inv AS units_lost,
+			WHEN pp.sale_price >= ps.p75 THEN 'high_value' ELSE 'low_value' END  AS product_cat,
+		(ia.start_inv + qa.purchase_qty - qa.sale_qty) - ia.end_inv 			 AS units_lost,
 		ROUND(((start_inv + purchase_qty - sale_qty) - end_inv) * sale_price, 2) AS monetary_value,		
-		((ia.start_inv + qa.purchase_qty - qa.sale_qty) - ia.end_inv)
-		/ NULLIF((ia.start_inv + qa.purchase_qty - qa.sale_qty), 0) * 100 AS loss_rate
+		((ia.start_inv + qa.purchase_qty - qa.sale_qty) - ia.end_inv) / 
+		NULLIF((ia.start_inv + qa.purchase_qty - qa.sale_qty), 0) * 100 		 AS loss_rate
 	FROM product_price pp
 	CROSS JOIN price_stats ps
 	JOIN inv_agg ia ON pp.product_id = ia.product_id 
@@ -73,12 +73,13 @@ shrinkage_calc AS (
 SELECT 
 	product_cat,
     COUNT(CASE WHEN units_lost > 0 THEN 1 END) AS units_lost,
-    SUM(monetary_value) monetary_value,
-	ROUND(AVG(loss_rate), 2) AS avg_loss_rate
+    SUM(monetary_value) 				 	   AS monetary_value,
+	ROUND(AVG(loss_rate), 2) 				   AS avg_loss_rate
 FROM shrinkage_calc
 WHERE units_lost > 0
 GROUP BY product_cat
 ;
+
 -- OUTPUT:
 /*
 product_cat|units_lost|monetary_value|avg_loss_rate
