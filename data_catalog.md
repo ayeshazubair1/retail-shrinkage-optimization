@@ -1,7 +1,7 @@
-> This documentation provides a comprehensive, end-to-end overview of the data lifecycle—from raw ingestion and quality assessment to the final analytical modeling in the Gold layer.
+> This documentation provides a comprehensive, end-to-end overview of the data lifecycle, from raw ingestion and quality assessment to final analytical modeling in the gold layer.
 
 ## Dataset Overview
-The Bibitor LLC dataset represents a large-scale fictional retail wine and spirits company operating approximately 80 stores across the state of Lincoln. It provides comprehensive transactional data capturing end-to-end operations, including product sales, purchases, vendor details, pricing, and inventory snapshots (beginning and ending). The dataset spans the full calendar year of 2016 (January 1 to December 31). It comprises 6 relational tables with over 13 million records, primarily driven by detailed sales transactions.
+Bibitor LLC dataset represents a large-scale fictional retail wine and spirits company operating approximately 80 stores across the state of Lincoln. It provides comprehensive transactional data covering end-to-end operations, including product sales, purchases, vendor details, pricing, and inventory snapshots (beginning and ending). The dataset spans the full calendar year of 2016 (January 1 to December 31). It consists of 6 relational tables with over 13 million records, primarily driven by detailed sales transactions.
 
 #### Data Source
 The original raw CSV files and supporting materials can be downloaded from PwC's Data Analytics Case Studies page [here](https://www.pwc.com/us/en/careers/university-relations/data-and-analytics-case-studies-files.html).  
@@ -11,15 +11,15 @@ The original raw CSV files and supporting materials can be downloaded from PwC's
 <img src="docs/01_schema_layers.svg" width="700" alt="Schema Layers">
 
 ### 1- Raw Data Ingestion: 
-After downloading the dataset, I set up a dedicated PostgreSQL database and created a `raw` schema to store the data in its original, unprocessed form. 
+After downloading the dataset, a dedicated PostgreSQL database was set up and a `raw` schema was created to store the data in its original, unprocessed form.
 - Wrote `CREATE TABLE` scripts for all **6 tables**, intentionally mirroring the exact structure of the source files (preserving original table/column names and data types `VARCHAR`, `REAL`, `INTEGER`)
-- Loaded the data using PostgreSQL's `COPY` command within stored procedures for an efficient bulk-loading mechanism for the CSV files.
+- Loaded the data using PostgreSQL's `COPY` command within stored procedures for an efficient bulk loading of the CSV files.
 
 #### Data Quality Assessment
-Once the data was successfully loaded into the `raw` schema, I conducted comprehensive quality checks across all six tables to identify any data integrity issues that could impact the  analysis. This assessment revealed several data quality problems, including null values, inconsistent formatting and standardization issues, unwanted leading or trailing spaces, missing values, and calculation discrepancies where computed fields didn't match their underlying source values. These findings helped clean and prepare the data so it could be trusted for analysis.  
-The issues found in data is listed below:
+Once the data was successfully loaded into the `raw` schema, comprehensive quality checks were conducted across all six tables to identify data integrity issues that could impact the analysis. This assessment revealed several data quality problems, including null values, inconsistent formatting and standardization issues, unwanted leading or trailing spaces, missing values, and calculation discrepancies where computed fields did not match their underlying source values. These findings helped clean and prepare the data for reliable analysis.     
+The issues found in data are listed below:
 
-| Table Name                   | Column Name       | Issue Identified                       | Fix Applied                    |
+| Table                        | Column            | Issue                                  | Fix Applied                    |
 |------------------------------|-------------------|----------------------------------------|--------------------------------|
 | 2017PurchasePricesDec        | Size, Volume      | Inconsistent/empty values              | normalize_size(), NULLIF()     |
 |                              | VendorName        | Leading/trailing spaces                | TRIM(), LOWER()                |
@@ -37,19 +37,20 @@ The issues found in data is listed below:
 **Note:** normalize_size() is a custom user-defined function created to standardize size formats across different units (ml, L, oz, gal) into a consistent ml format.
 
 ### 2- Reusable Clean Layer (Standardized Views)
-After identifying quality issues, I created a clean schema with transformation scripts to address all documented problems. The cleaned data was stored as views rather than physical tables, preserving the original structure while applying necessary fixes.  
-**Why views, not physical tables?** Views were chosen over physical tables because the data was not yet analysis-ready and would be further modeled in gold layer. This approach avoided unnecessary data duplication and kept the pipeline flexible for future transformations.
+After identifying quality issues, a clean schema was created with transformation scripts to address all documented problems. The cleaned data was stored as views rather than physical tables, preserving the original structure while applying necessary fixes.  
+**Why views, not physical tables?** Views were chosen over physical tables because the data was not yet analysis-ready and would be further modeled in the gold layer. This approach avoided unnecessary data duplication and kept the pipeline flexible for future transformations.   
 
 ### 3- Gold Layer / Analytical Modeling
-After storing the cleaned transformed data into views, I created a gold schema and transformed the six raw tables into a star schema optimized for business analysis. This involved complete restructuring: renaming tables and columns to business-friendly names, establishing proper relationships with primary and foreign keys, and consolidating relevant attributes from multiple source tables into each dimension and fact table.
+After storing the cleaned transformed data into views, a gold schema was created and the six raw tables were transformed into a star schema optimized for business analysis. This involved complete restructuring: renaming tables and columns to business-friendly names, establishing proper relationships with primary and foreign keys, and consolidating relevant attributes from multiple source tables into each dimension and fact table.
 
 <br>
   
 <img src="docs/02_ERD_bibitor_llc.svg" width="600" alt="ERD Diagram">
 
-### Table Descriptions
-Table Name: **Stores (Dimension)**   
-Rows / Columns: **80 / 3**  
+### Table Description
+
+**Stores (Dimension)**   
+Rows: **80** 
 | Column   | Description |
 |----------|-------------|
 | store_id | Unique identifier for each store location. |
@@ -58,8 +59,8 @@ Rows / Columns: **80 / 3**
 
 <br>
 
-Table Name: **Products (Dimension)**  
-Rows / Columns: **12K / 8**  
+**Products (Dimension)**  
+Rows: **12K**
 | Column         | Description |
 |----------------|-------------|
 | product_id     | Unique identifier for each product. |
@@ -73,8 +74,8 @@ Rows / Columns: **12K / 8**
 
 <br>
 
-Table Name: **Vendors (Dimension)**  
-Rows / Columns: **134 / 3**   
+**Vendors (Dimension)**  
+Rows: **134**   
 | Column      | Description |
 |-------------|-------------|
 | vendor_id   | Unique identifier for each vendor or supplier. |
@@ -83,8 +84,8 @@ Rows / Columns: **134 / 3**
 
 <br>
 
-Table Name: **Inventory_Snapshot (Fact)**  
-Rows / Columns: **431K / 8**  
+**Inventory_Snapshot (Fact)**  
+Rows: **431K**  
 | Column        | Description |
 |---------------|-------------|
 | snapshot_id   | Unique identifier for each inventory record. |
@@ -98,8 +99,8 @@ Rows / Columns: **431K / 8**
 
 <br>
 
-Table Name: **Purchases (Fact)**  
-Rows / Columns: **2M / 16**  
+**Purchases (Fact)**  
+Rows: **2M**  
 | Column            | Description |
 |------------------|-------------|
 | purchase_id       | Unique identifier for each purchase transaction. |
@@ -121,8 +122,8 @@ Rows / Columns: **2M / 16**
 
 <br>
 
-Table Name: **Sales (Fact)**  
-Rows / Columns: **13M / 11**  
+**Sales (Fact)**  
+Rows: **13M**  
 | Column        | Description |
 |---------------|-------------|
 | sales_id      | Unique identifier for each sales transaction. |
@@ -138,7 +139,7 @@ Rows / Columns: **13M / 11**
 | excise_tax    | Alcohol excise tax charged per sale. |
 ---
 **SQL Scripts:**  
-DDL scripts [here](sql/01_ddl)  
-Data Load scripts [here](sql/02_load)  
+DDL [here](sql/01_ddl)  
+Data Load [here](sql/02_load)  
 Data Quality Checks [here](sql/03_test)  
 Database init [here](sql/db_init.sql)  
