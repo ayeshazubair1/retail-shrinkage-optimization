@@ -10,7 +10,7 @@ This analysis identifies two major financial risks impacting Bibitor LLC:
 - $199K in direct annual shrinkage losses
 - $28M in capital tied up in slow-moving inventory
 
-65% of all shrinkage is localized in four stores — notably Store 77 and Store 25 — which also carry the highest excess inventory levels. Vendor fulfillment inaccuracies compound the problem, with William Grant & Sons Inc alone accounting for a 35K-unit delivery variance. Targeting audits at high-risk locations and enforcing vendor accountability represents the clearest path to releasing trapped capital and stabilizing margins.
+65% of all shrinkage is localized in four stores — notably Store 77 and Store 25 — which also carry the highest excess inventory levels. Vendor fulfillment inaccuracies compound the problem, with William Grant & Sons Inc alone accounting for a 35K-unit delivery variance. Targeting audits at high-risk locations and enforcing vendor accountability represents the clearest path to releasing trapped capital and stabilizing margins.   
 **View Dashboard** [here.](https://public.tableau.com/app/profile/ayeshazubair/viz/RetailShrinkageInventoryAnalysisBibitorLLC/bibitor_dashboard)
 
 ## Key Findings & Business Implications
@@ -30,8 +30,7 @@ While high-value products show a slightly higher average loss rate, low-value it
 <img src="docs/images/02_value_tier.png" width="350" alt="Vertical bar chart showing monetary loss by product category">
 
 #### 3. Capital Inefficiency Represents the Largest Structural Risk: $28M Locked in Slow-Moving Inventory
-Across the network, 8,198 SKUs exceed 90 days of supply, tying up approximately **$28M** in working capital. Exposure is highly concentrated — four stores (77, 26, 49, and 25) alone account for ~$5.5M, with Store 77 as the single largest contributor at nearly $2M in slow-moving stock.
-
+Across the network, 8,198 SKUs exceed 90 days of supply, tying up approximately **$28M** in working capital. Exposure is highly concentrated — four stores (77, 26, 49, and 25) alone account for ~$5.5M, with Store 77 as the single largest contributor at nearly $2M in slow-moving stock.   
 Liquidity risk is most severe in Stores 64, 77, 40, and 49, where inventory-weighted average days of supply exceed 700 days, indicating prolonged stagnation.
 
 **Business Implication:** Inventory inefficiency poses a larger structural risk than shrinkage. At an 8% cost of capital, excess stock generates ~$2.24M in annual opportunity cost — and unlike shrinkage, this exposure compounds over time as holding periods increase damage and obsolescence risk.
@@ -90,16 +89,16 @@ Inventory variance is concentrated among a small number of vendors. Under-delive
 
 ## Methodology & Analytical Approach
 
-**1. Performance Optimization:** To handle high-volume tables (12M+ sales records), Materialized Views and B-Tree Indexing were implemented on primary and foreign keys — significantly reducing query execution time by pre-aggregating core metrics and improving data retrieval efficiency.
-**2. Code Modularization:** CTEs were used to keep the analytical pipeline modular, readable, and maintainable — allowing complex multi-step calculations to be audited easily.
-**3. Weighted Valuation:** Weighted Averages were preferred over naive averages for sale and purchase prices, ensuring high-volume transactions carry appropriate mathematical weight and preventing low-volume outliers from skewing financial results.
+**1. Performance Optimization:** To handle high-volume tables (12M+ sales records), Materialized Views and B-Tree Indexing were implemented on primary and foreign keys — significantly reducing query execution time by pre-aggregating core metrics and improving data retrieval efficiency.   
+**2. Code Modularization:** CTEs were used to keep the analytical pipeline modular, readable, and maintainable — allowing complex multi-step calculations to be audited easily.   
+**3. Weighted Valuation:** Weighted Averages were preferred over naive averages for sale and purchase prices, ensuring high-volume transactions carry appropriate mathematical weight and preventing low-volume outliers from skewing financial results.   
 **4. Core Shrinkage Framework:** A three-pillar calculation was standardized across every business question for consistency:
 - **Unit Loss:** Physical inventory discrepancy.
 - **Monetary Impact:** Total dollar-value exposure.
-- **Percentage Impact:** Loss rate relative to total volume or value 
+- **Percentage Impact:** Loss rate relative to total volume or value    
 
-**5. Data-Driven Threshold:** In the absence of predefined industry benchmarks, `PERCENTILE_CONT` was used to perform a distribution analysis and establish risk thresholds from the data itself.
-**6. Risk Categorization:** Final segmentation (Critical vs. High-Impact) was derived by testing multiple percentiles (P75, P91, P96) to identify the elbow point — the threshold where financial risk and exposure significantly accelerate.
+**5. Data-Driven Threshold:** In the absence of predefined industry benchmarks, `PERCENTILE_CONT` was used to perform a distribution analysis and establish risk thresholds from the data itself.   
+**6. Risk Categorization:** Final segmentation (Critical vs. High-Impact) was derived by testing multiple percentiles (P75, P91, P96) to identify the elbow point — the threshold where financial risk and exposure significantly accelerate.   
 
 ## Operational Risk & Performance Indicators
 
@@ -137,11 +136,11 @@ Download [Dataset](https://www.hubae.org/datvironment/bibitor/)
 
 ## ⚠️ Limitations & Assumptions
 
-**1. Synthetic Dataset:** This project uses a fictional dataset, so operational details like store layouts, staffing levels, cycle-count frequencies, or security logs are unavailable for root-cause analysis.
-**2. Temporal Granularity:** Inventory data is limited to annual snapshots (Start-of-Year and End-of-Year), preventing analysis of monthly trends, quarterly fluctuations, or specific out-of-stock periods.
-**3. Standardized Sales Velocity:** The Days of Supply (DOS) calculation assumes a steady sales pace year-round — it does not account for holiday spikes or seasonality.
-**4. Data-Driven Benchmarks:** The 90-day supply threshold and percentile benchmarks were derived from internal data distribution analysis, serving as logical estimates for business risk where company-defined KPIs were unavailable.
-**5. Data Scope:** Only products with recorded sales and inventory movement are included.
+**1. Synthetic Dataset:** This project uses a fictional dataset, so operational details like store layouts, staffing levels, cycle-count frequencies, or security logs are unavailable for root-cause analysis.   
+**2. Temporal Granularity:** Inventory data is limited to annual snapshots (Start-of-Year and End-of-Year), preventing analysis of monthly trends, quarterly fluctuations, or specific out-of-stock periods.   
+**3. Standardized Sales Velocity:** The Days of Supply (DOS) calculation assumes a steady sales pace year-round — it does not account for holiday spikes or seasonality.   
+**4. Data-Driven Benchmarks:** The 90-day supply threshold and percentile benchmarks were derived from internal data distribution analysis, serving as logical estimates for business risk where company-defined KPIs were unavailable.   
+**5. Data Scope:** Only products with recorded sales and inventory movement are included.   
 
 ## 📁 Project Structure
 ```
