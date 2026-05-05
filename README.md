@@ -6,11 +6,12 @@ Bibitor LLC is a retail wine and spirits company operating ~80 stores across the
 > **The Challenge:** Identify where inventory is disappearing, what's tying up capital, and which operational failures are driving both issues.
 
 ## 🎯 Executive Summary
-This analysis identifies two major financial risks impacting Bibitor LLC: 
+Despite strong revenues, Bibitor's margins are being quietly eroded from two directions:   
 - $199K in direct annual shrinkage losses
 - $28M in capital tied up in slow-moving inventory
 
-65% of all shrinkage is localized in four stores — notably Store 77 and Store 25 — which also carry the highest excess inventory levels. Vendor fulfillment inaccuracies compound the problem, with William Grant & Sons Inc alone accounting for a 35K-unit delivery variance. Targeting audits at high-risk locations and enforcing vendor accountability represents the clearest path to releasing trapped capital and stabilizing margins.   
+65% of all shrinkage is localized in four stores — notably Store 77 and Store 25 — which also carry the highest excess inventory levels. Vendor fulfillment inaccuracies compound the problem, with William Grant & Sons Inc alone accounting for a 35K-unit delivery variance.   
+Prioritizing targeted audits at high-risk stores and enforcing vendor compliance controls will provide the fastest path to reducing losses, improving inventory turnover, and releasing trapped capital.        
 **View Dashboard** [here.](https://public.tableau.com/app/profile/ayeshazubair/viz/RetailShrinkageInventoryAnalysisBibitorLLC/bibitor_dashboard)
 
 ## Key Findings & Business Implications
@@ -107,7 +108,7 @@ Inventory variance is concentrated among a small number of vendors. Under-delive
 | **Total Shrinkage Loss** 		| $199K 					| Annual revenue impact across 41 stores 			    |
 | **Capital Trapped** 			| $28M			 			| Total value of inventory exceeding the 90-day supply threshold 					    |
 | **Worst Performing Store**	| Store 77 		| Accounts for $53K in loss; ranks 1st in shrinkage despite 6th in sales   |
-| **Top Vendor Issue**			| -14.44% 	| William Grant & Sons Inc under-delivered by 35.9K units 			    |
+| **Top Vendor Issue**			| 35.9K 	| William Grant & Sons Inc — highest under-delivery variance across all vendors 			    |
 | **Loss Concentration**		| 65%    	| $129K of total losses are localized within just 4 key stores 			    |
 | **Product Pattern** 			| 88%  | Loss is dominated by low-value items, suggesting process errors over theft. 					|
 
@@ -117,7 +118,7 @@ Inventory variance is concentrated among a small number of vendors. Under-delive
 **Architecture:** Raw → Clean → Gold (medallion approach)
 **Data Flow:**
 ```
-Raw CSV Files (6 tables: stores, products, vendors, inventory, sales, purchases)
+Raw CSV Files
     ↓
 Clean Layer (Views: deduplication, validation, type casting)
     ↓
