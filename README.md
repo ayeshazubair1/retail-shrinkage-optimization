@@ -10,33 +10,34 @@ Despite strong revenues, Bibitor’s margins are eroded by two core issues:
 - **$199K** in direct annual shrinkage losses
 - **$28M** in capital tied up in slow-moving inventory
 
-65% of shrinkage is concentrated in four stores, led by Store 77 and Store 25. Vendor fulfillment errors contribute significant variance, including a 35K-unit discrepancy from William Grant & Sons Inc.   
+65% of shrinkage is concentrated in four stores, led by Store 77 and Store 25.   
+Vendor fulfillment errors contribute significant variance, including a 35K-unit discrepancy from William Grant & Sons Inc.   
 **View Dashboard** [here](https://public.tableau.com/app/profile/ayeshazubair/viz/RetailShrinkageInventoryAnalysisBibitorLLC/bibitor_dashboard)
 
 ## Key Findings
 
-#### 1. Shrinkage Is Highly Concentrated: Four Stores Drive Nearly Two-Thirds of Total Loss
+### 1. Shrinkage Is Highly Concentrated: Four Stores Drive Nearly Two-Thirds of Total Loss
 Four locations account for **\$129K** (65%), of total annual shrinkage (\$200K), split into \$94K direct cost and \$35K lost margin. **Store 77 is the highest-risk location** at \$53K in exposure, likely amplified by its large SKU assortment.
 
 <img src="docs/images/01_store_shrinkage.png" width="350" alt="Vertical bar chart showing financial loss from shrinkage">
 
-#### 2. Operational Leakage Dominates: Low-Value Items Drive 88% of Shrinkage Value
+### 2. Operational Leakage Dominates: Low-Value Items Drive 88% of Shrinkage Value
 Low-value items account for 88% of total shrinkage (\$233K of $264K), driven by transaction volume rather than unit price. High-value items show higher per-unit loss rates but minimal contribution to total loss.
 
 <img src="docs/images/02_value_tier.png" width="350" alt="Vertical bar chart showing monetary loss by product category">
 
-#### 3. Capital Inefficiency Represents the Largest Structural Risk: $28M Locked in Slow-Moving Inventory
+### 3. Capital Inefficiency Represents the Largest Structural Risk: $28M Locked in Slow-Moving Inventory
 Across the network, 8,198 SKUs exceed 90 days of supply, tying up \$28M in working capital. Exposure is highly concentrated — four stores (77, 26, 49, and 25) alone account for \$5.5M, with Store 77 alone contributing nearly \$2M.   
 **Liquidity risk** is most severe in Stores 64, 77, 40, and 49, where inventory average days of supply exceed 700 days, indicating prolonged stagnation.
 
 <img src="docs/images/03_excess_inventory.png" width="350" alt="Horizontal bar chart showing stores with most capital tied up in excess inventory">
 
-#### 4. Vendor Delivery Inaccuracies Create Systemic Stock Imbalances
+### 4. Vendor Delivery Inaccuracies Create Systemic Stock Imbalances
 Inventory variance is concentrated among specific vendors rather than distributed randomly. William Grant & Sons Inc shows cumulative under-deliveries exceeding 35K units, while Alisa Carr Beverages over-delivered by approximately 65% relative to orders. These patterns are consistent across multiple products, indicating persistent fulfillment errors.
 
 <img src="docs/images/04_vendor_variance.png" width="400" alt="Diverging bar chart showing vendor fulfillment accuracy">
 
-#### 5. Geographic Patterns Reveal Distinct Operational Failure Modes
+### 5. Geographic Patterns Reveal Distinct Operational Failure Modes
 Losses cluster geographically, with Store 77 (Mountmend) and Store 25 (Paentmarwy) accounting for $64K+ in shrinkage. In contrast, Stores 49 (Eanverness) and 40 (Pitmerden) show significant overstock relative to recorded deliveries, indicating localized receiving and inventory control failures.
 
 <img src="docs/images/05_location_risk.png" width="400" alt="Diverging bar chart showing financial discrepancies">
