@@ -1,23 +1,22 @@
 > This documentation provides a comprehensive, end-to-end overview of the data lifecycle, from raw ingestion and quality assessment to final analytical modeling in the gold layer.
 
 ## Dataset Overview
-Bibitor LLC dataset represents a large-scale fictional retail wine and spirits company operating approximately 80 stores across the state of Lincoln. It provides comprehensive transactional data covering end-to-end operations, including product sales, purchases, vendor details, pricing, and inventory snapshots (beginning and ending). The dataset spans the full calendar year of 2016 (January 1 to December 31). It consists of 6 relational tables with over 13 million records, primarily driven by detailed sales transactions.
+The dataset represents a large-scale fictional retail wine and spirits company operating 80 stores across the state of Lincoln. It provides comprehensive transactional data covering end-to-end operations, including product sales, purchases, vendor details, pricing, and inventory snapshots (beginning and ending). The dataset spans the full calendar year of 2016 (January 1 to December 31). It consists of 6 relational tables with over 13 million records, primarily driven by detailed sales transactions.
 
 #### Data Source
-The original raw CSV files and supporting materials can be downloaded from PwC's Data Analytics Case Studies page [here](https://www.pwc.com/us/en/careers/university-relations/data-and-analytics-case-studies-files.html).  
-**Note**: The dataset was originally created by the HUB of Analytics Education [HUB AE](https://www.hubae.org/datvironment/bibitor/?referrer=grok.com) at Northeastern University and is distributed by PwC for educational purposes.
+The original raw csv files can be downloaded from [here](https://www.pwc.com/us/en/careers/university-relations/data-and-analytics-case-studies-files.html).  
+**Note**: The dataset is originally created by the HUB of Analytics Education [HUB AE](https://www.hubae.org/datvironment/bibitor/?referrer=grok.com)
 
 #### Approach / Data Pipeline
-<img src="docs/01_schema_layers.svg" width="700" alt="Schema Layers">
+<img src="docs/schema_layers.svg" width="700" alt="Schema Layers">
 
 ### 1- Raw Data Ingestion: 
-After downloading the dataset, a dedicated PostgreSQL database was set up and a `raw` schema was created to store the data in its original, unprocessed form.
-- Wrote `CREATE TABLE` scripts for all **6 tables**, intentionally mirroring the exact structure of the source files (preserving original table/column names and data types `VARCHAR`, `REAL`, `INTEGER`)
-- Loaded the data using PostgreSQL's `COPY` command within stored procedures for an efficient bulk loading of the CSV files.
+After downloading the data files, a dedicated PostgreSQL database was set up and a `raw` schema was created to store the data in its original, unprocessed form.
 
 #### Data Quality Assessment
-Once the data was successfully loaded into the `raw` schema, comprehensive quality checks were conducted across all six tables to identify data integrity issues that could impact the analysis. This assessment revealed several data quality problems, including null values, inconsistent formatting and standardization issues, unwanted leading or trailing spaces, missing values, and calculation discrepancies where computed fields did not match their underlying source values. These findings helped clean and prepare the data for reliable analysis.     
-The issues found in data are listed below:
+Once the data was successfully loaded into the `raw` schema, comprehensive quality checks were conducted across all six tables to identify data integrity issues that could impact the analysis. This assessment revealed several data quality problems, including null values, inconsistent formatting, standardization issues, and calculation discrepancies etc.
+
+**Issues found:**
 
 | Table                        | Column            | Issue                                  | Fix Applied                    |
 |------------------------------|-------------------|----------------------------------------|--------------------------------|
@@ -41,11 +40,13 @@ After identifying quality issues, a clean schema was created with transformation
 **Why views, not physical tables?** Views were chosen over physical tables because the data was not yet analysis-ready and would be further modeled in the gold layer. This approach avoided unnecessary data duplication and kept the pipeline flexible for future transformations.   
 
 ### 3- Gold Layer / Analytical Modeling
-After storing the cleaned transformed data into views, a gold schema was created and the six raw tables were transformed into a star schema optimized for business analysis. This involved complete restructuring: renaming tables and columns to business-friendly names, establishing proper relationships with primary and foreign keys, and consolidating relevant attributes from multiple source tables into each dimension and fact table.
+After storing the cleaned transformed data into views, a gold schema was created and the six tables were transformed into a star schema optimized for business analysis. This involved complete restructuring: renaming tables and column names, establishing proper relationships with primary and foreign keys, and consolidating relevant attributes from multiple source tables into each dimension and fact table.
 
 <br>
   
-<img src="docs/02_ERD_bibitor_llc.svg" width="600" alt="ERD Diagram">
+<img src="docs/bibitor_ERD.svg" width="600" alt="ERD Diagram">
+
+---
 
 ### Table Description
 
