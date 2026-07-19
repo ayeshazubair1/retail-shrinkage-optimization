@@ -8,9 +8,11 @@ Download Dataset [here](https://www.pwc.com/us/en/careers/university-relations/d
 **Tools:** PostgreSQL • DBeaver • Tableau   
 **Architecture:** Medallion (Raw → Clean → Gold)   
 ```
-Raw layer   →  Ingested CSV datasets
-Clean layer →  Deduplication, validation, type casting
-Gold layer  →  Star schema with materialized aggregations for analytics
+Raw Tables
+   ↓
+Clean Layer → Standardized views (validation, deduplication, type casting)
+   ↓
+Gold Layer → Star schema (physical tables) + materialized views
 ```
 **Why this setup:** Ensures consistent business definitions across all analyses and enables scalable, fast query performance through pre-aggregated models and a semantic-like Gold layer.   
 
