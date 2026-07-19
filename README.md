@@ -89,7 +89,7 @@ Vendor inconsistency is driving both stockouts and excess inventory.
 
 ---
 
-View Technical Documentation [here](data_catalog.md)    
+View Technical Documentation [here](technical_documentation.md)    
 View Dashboard [here](https://public.tableau.com/app/profile/ayeshazubair/viz/RetailShrinkageInventoryAnalysisBibitorLLC/bibitor_dashboard)
 
 <br>
